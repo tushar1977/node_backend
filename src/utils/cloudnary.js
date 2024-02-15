@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import { ApiError } from "./apiError";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDNARY_CLOUD_NAME,
@@ -22,6 +23,18 @@ const uploadOnCloudinary = async (locafilepath) => {
     return responce;
   } catch (error) {
     fs.unlinkSync(locafilepath);
+    return null;
+  }
+};
+
+const deleteFromCloudinary = async (avatar) => {
+  try {
+    if (!avatar) {
+      return null;
+    }
+
+    const resp = await cloudinary.uploader.destroy();
+  } catch (error) {
     return null;
   }
 };
